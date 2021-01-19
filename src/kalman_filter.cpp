@@ -69,15 +69,15 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   // normalize phi to be between -pi and pi
   const double pi = 3.1415926;  // pi = 3.14159265358979323846
   if (y(1) < -pi) {
-    std::cout << "---------------------------------------- Theta is < -3.14.  ϕ = " << y(1);
+    std::cout << "---------------------------------------- phi is < -pi.  ϕ = " << y(1);
     y(1) = y(1) + 2*pi;
-    std::cout << " ---------------------------------------- Normalized Theta ϕ = " << y(1) << std::endl;
+    std::cout << " --------------------------------------- Normalized ϕ = " << y(1) << std::endl;
 
   }
   else if (y(1) > pi) {
-    std::cout << "---------------------------------------- Theta is < -3.14.  ϕ = " << y(1);
+    std::cout << "---------------------------------------- phi is > pi.  ϕ = " << y(1);
     y(1) = y(1) - 2*pi;
-    std::cout << " ---------------------------------------- Normalized Theta ϕ = " << y(1) << std::endl;
+    std::cout << " --------------------------------------- Normalized ϕ = " << y(1) << std::endl;
   }
 
   MatrixXd Ht = H_.transpose();
