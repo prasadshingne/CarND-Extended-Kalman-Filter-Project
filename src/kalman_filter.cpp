@@ -67,7 +67,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   VectorXd y = z - z_pred;
   
   // normalize phi to be between -pi and pi
-  const double pi = 3.1415926;  // pi = 3.14159265358979323846
+  const float pi = 3.1415926;  // pi = 3.14159265358979323846
   if (y(1) < -pi) {
     std::cout << "---------------------------------------- phi is < -pi.  ϕ = " << y(1);
     y(1) = y(1) + 2*pi;
