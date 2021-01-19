@@ -13,14 +13,15 @@ KalmanFilter::KalmanFilter() {}
 
 KalmanFilter::~KalmanFilter() {}
 
-void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in,
-                        MatrixXd &H_in, MatrixXd &R_in, MatrixXd &Q_in) {
-  x_ = x_in;
-  P_ = P_in;
-  F_ = F_in;
-  H_ = H_in;
-  R_ = R_in;
-  Q_ = Q_in;
+void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in, MatrixXd &H_in, 
+                        MatrixXd &R_lidar_in, MatrixXd &R_radar_in, MatrixXd &Q_in) {
+  x_        = x_in;
+  P_        = P_in;
+  F_        = F_in;
+  H_        = H_in;
+  R_lidar_  = R_lidar_in;
+  R_radar_  = R_radar_in;
+  Q_        = Q_in;
 }
 
 void KalmanFilter::Predict() {
@@ -37,51 +38,47 @@ void KalmanFilter::Update(const VectorXd &z) {
   /**
    * TODO: update the state by using Kalman Filter equations
    */
-    VectorXd z_pred = H_ * x_;
-    VectorXd y      = z - z_pred;
-    MatrixXd Ht     = H_.transpose();
-    MatrixXd S      = H_ * P_ * Ht + R_;
-    MatrixXd Si     = S.inverse();
-    MatrixXd PHt    = P_ * Ht;
-    MatrixXd K      = PHt * Si;
-
-  //new estimate
-    x_              = x_ + (K * y);
-    long x_size     = x_.size();
-    MatrixXd I      = MatrixXd::Identity(x_size, x_size);
-    P_              = (I - K * H_) * P_;
+    UpdateCommon(z, H_, R_lidar_, false);
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
-
-
   /**
    * TODO: update the state by using Extended Kalman Filter equations
    */
-    float rho       = sqrt(x_(0)*x_(0) + x_(1)*x_(1));
-    float phi       = atan2(x_(1),x_(0));
-    float rho_dot;
+  MatrixXd Hj = tools_.CalculateJacobian(x_);
 
-    if (fabs(rho) < 0.0001) {
-        rho_dot = 0;
-    } else {
-        rho_dot = (x_(0)*x_(2) + x_(1)*x_(3))/rho;
+  UpdateCommon(z, Hj, R_radar_, true);
+}
+
+void KalmanFilter::UpdateCommon(const VectorXd &z, const MatrixXd &H, const MatrixXd &R, bool is_ekf) {
+  VectorXd y;
+
+  if (is_ekf) {
+    // using equations for extended kalman filter
+
+    // convert radar measurements from cartesian coordinates (x, y, vx, vy) to polar (rho, phi, rho_dot).
+    VectorXd x_polar = tools_.ConvertFromCartesianToPolarCoords(x_);
+    y = z - x_polar;
+
+    // normalize the angle between -pi to pi
+    while(y(1) > M_PI){
+      y(1) -= 2 * M_PI;
     }
 
-    VectorXd z_pred(3);
-    z_pred << rho, phi, rho_dot;
-    VectorXd y      = z - z_pred;
-    MatrixXd Ht     = H_.transpose();
-    MatrixXd S      = H_ * P_ * Ht + R_;
-    MatrixXd Si     = S.inverse();
-    MatrixXd PHt    = P_ * Ht;
-    MatrixXd K      = PHt * Si;
+    while(y(1) < -M_PI){
+      y(1) += 2 * M_PI;
+    }
+  } else {
+    // using equations for kalman filter
+    y = z - H * x_;
+  }
 
-  //new estimate
-    x_              = x_ + (K * y);
-    long x_size     = x_.size();
-    MatrixXd I      = MatrixXd::Identity(x_size, x_size);
-    P_              = (I - K * H_) * P_;
+  MatrixXd Ht = H.transpose();
+  MatrixXd S = H * P_ * Ht + R;
+  MatrixXd Si = S.inverse();
+  MatrixXd K =  P_ * Ht * Si;
 
-
+  // new state
+  x_ = x_ + (K * y);
+  P_ = (I_ - K * H) * P_;
 }

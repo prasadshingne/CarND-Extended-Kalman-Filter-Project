@@ -60,14 +60,14 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
         return Hj;
     }
 
-    float px = x_state(0);
-    float py = x_state(1);
-    float vx = x_state(2);
-    float vy = x_state(3);
-
-    float c1 = px*px + py*py;
-    float c2 = sqrt(c1);
-    float c3 = (c1*c2);
+    const double & px = x_state(0);
+    const double & py = x_state(1);
+    const double & vx = x_state(2);
+    const double & vy = x_state(3);
+    
+    double c1 = px*px + py*py;
+    double c2 = sqrt(c1);
+    double c3 = (c1*c2);
 
     if (fabs(c1) < 0.0001)
     {
@@ -77,7 +77,32 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
 
     Hj << (px/c2), (py/c2), 0, 0,
          -(py/c1), (px/c1), 0, 0,
-          (py*(vx*py-vy*px)/c3), (px*(vy*px-vx*py)/c3), (px/c2), (py/c2);
+          py*(vx*py-vy*px)/c3, px*(vy*px-vx*py)/c3, px/c2, py/c2;
 
     return Hj;
+}
+
+VectorXd Tools::ConvertFromCartesianToPolarCoords(const VectorXd &v_cart)
+{
+    const double & px = v_cart(0);
+    const double & py = v_cart(1);
+    const double & vx = v_cart(2);
+    const double & vy = v_cart(3);
+
+    double rho, phi, rho_dot;
+    rho = sqrt(px*px + py*py);
+    phi = atan2(py, px);
+
+    // protection from division by zero
+    if (rho < 0.000001) {
+        rho = 0.000001;
+    }
+
+    rho_dot = (px * vx + py * vy) / rho;
+
+    VectorXd v_polar = VectorXd(3);
+    v_polar << rho, phi, rho_dot;
+
+    return v_polar;
+
 }
