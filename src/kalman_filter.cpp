@@ -61,25 +61,17 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   } else {
     rho_dot = (x_(0)*x_(2) + x_(1)*x_(3))/rho;
   }
-  VectorXd z_pred(3);
+  //VectorXd z_pred(3);
+  VectorXd z_pred = VectorXd(3); 
   z_pred << rho, phi, rho_dot;
 
   VectorXd y = z - z_pred;
   
-  // normalize phi to be between -pi and pi
-  const float pi = 3.1415926;  // pi = 3.14159265358979323846
-  if (y(1) < -pi) {
-    std::cout << "---------------------------------------- phi is < -pi.  ϕ = " << y(1);
-    y(1) = y(1) + 2*pi;
-    std::cout << " --------------------------------------- Normalized ϕ = " << y(1) << std::endl;
+  // make sure that the angle is between -pi and pi
+  for (; y(1) < -M_PI; y(1) += 2*M_PI) {}
+  for (; y(1) > M_PI;  y(1) -= 2*M_PI) {}
 
-  }
-  else if (y(1) > pi) {
-    std::cout << "---------------------------------------- phi is > pi.  ϕ = " << y(1);
-    y(1) = y(1) - 2*pi;
-    std::cout << " --------------------------------------- Normalized ϕ = " << y(1) << std::endl;
-  }
-
+  
   MatrixXd Ht = H_.transpose();
   MatrixXd S = H_ * P_ * Ht + R_;
   MatrixXd Si = S.inverse();
