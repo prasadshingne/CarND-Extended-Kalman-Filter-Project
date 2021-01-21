@@ -4,7 +4,9 @@
 #include "json.hpp"
 #include "FusionEKF.h"
 #include "tools.h"
+#include <fstream>      //
 
+using namespace std;    //
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using std::string;
@@ -126,7 +128,7 @@ int main() {
           estimate(3) = v2;
         
           estimations.push_back(estimate);
-
+          
           VectorXd RMSE = tools.CalculateRMSE(estimations, ground_truth);
 
           json msgJson;
@@ -139,6 +141,10 @@ int main() {
           auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
           // std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
+
+          std::cout << "ground_truth " << gt_values(0) << " " << gt_values(1) << " " << gt_values(2) << " " << gt_values(3) << " " << std::endl;
+          std::cout << "estimate " << estimate(0) << " " << estimate(1) << " " << estimate(2) << " " << estimate(3) << " " << std::endl;
+          std::cout << "RMSE " << RMSE(0) << " " << RMSE(1) << " " << RMSE(2) << " " << RMSE(3) << " " << std::endl;
 
         }  // end "telemetry" if
 
@@ -169,4 +175,6 @@ int main() {
   }
   
   h.run();
+
+  
 }
