@@ -14,6 +14,12 @@ using std::vector;
 FusionEKF::FusionEKF() {
   is_initialized_ = false;
 
+  // variables to use only lidar or radar
+
+  use_lidar_ = false;
+
+  use_radar_ = true;
+
   previous_timestamp_ = 0;
 
   // initializing matrices
@@ -155,14 +161,14 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
      * Update the state and covariance matrices.
    */
 
-  if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
+  if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR && use_radar_) {
     // Radar updates
     Tools tools;
     Hj_ = tools.CalculateJacobian(ekf_.x_);
     ekf_.H_ = Hj_;
     ekf_.R_ = R_radar_;
     ekf_.UpdateEKF(measurement_pack.raw_measurements_);
-  } else {
+  } else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER && use_lidar_) {
     // Laser updates
     ekf_.H_ = H_laser_;
     ekf_.R_ = R_laser_;

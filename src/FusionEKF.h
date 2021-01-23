@@ -31,6 +31,14 @@ public:
   */
   KalmanFilter ekf_;
 
+  // bool to turn lidar on and off
+
+  bool use_lidar_;
+
+  // bool to turn radar on and off
+
+  bool use_radar_;
+
 private:
   // check whether the tracking toolbox was initiallized or not (first measurement)
   bool is_initialized_;

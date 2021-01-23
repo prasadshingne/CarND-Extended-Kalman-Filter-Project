@@ -139,12 +139,18 @@ int main() {
           msgJson["rmse_vx"] = RMSE(2);
           msgJson["rmse_vy"] = RMSE(3);
           auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
+          
           // std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
 
           std::cout << "ground_truth " << gt_values(0) << " " << gt_values(1) << " " << gt_values(2) << " " << gt_values(3) << " " << std::endl;
           std::cout << "estimate " << estimate(0) << " " << estimate(1) << " " << estimate(2) << " " << estimate(3) << " " << std::endl;
           std::cout << "RMSE " << RMSE(0) << " " << RMSE(1) << " " << RMSE(2) << " " << RMSE(3) << " " << std::endl;
+          if (meas_package.sensor_type_ == MeasurementPackage::RADAR){
+            std::cout << "Radar " << meas_package.raw_measurements_(0) << " " << meas_package.raw_measurements_(1) << " " << meas_package.raw_measurements_(2) << " " << meas_package.timestamp_ << " " << std::endl;
+          } else {
+            std::cout << "Lidar " << meas_package.raw_measurements_(0) << " " << meas_package.raw_measurements_(1) << " " << 0.0 << " " << meas_package.timestamp_ << " " << std::endl;
+          }
 
         }  // end "telemetry" if
 
@@ -176,5 +182,4 @@ int main() {
   
   h.run();
 
-  
 }
