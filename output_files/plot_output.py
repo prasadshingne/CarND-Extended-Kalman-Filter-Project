@@ -111,17 +111,17 @@ fig.savefig( output_file_name[:-4]+'_position.tif', dpi = 300)
 
 #%% plot velocity
 
-fig = plt.figure(figsize=(6.4, 5.0))
-# plt.scatter(lidar["px"],lidar["py"], s = 25, marker = "x", color = 'k', linewidths=1, label = "Lidar")
-plt.scatter(radar["vx"],radar["vy"], s = 25, marker = "+", color = 'r', linewidth=1, label = "Radar")
-plt.scatter(est["vx"],est["vy"], s = 35, marker = "1", color = 'g', linewidth=1, label = "Estimate")
-plt.plot(gt["vx"],gt["vy"], linewidth=1.5, label = "Ground Truth")
-plt.grid(color = 'k', ls = '--', lw = 0.5)
-plt.legend()
-plt.xlabel('VX (units)')
-plt.ylabel('VY (units)')
-plt.title('Velocity [VX,VY]')
-fig.savefig(output_file_name[:-4]+'_velocity.tif', dpi = 300)
+# fig = plt.figure(figsize=(6.4, 5.0))
+# # plt.scatter(lidar["px"],lidar["py"], s = 25, marker = "x", color = 'k', linewidths=1, label = "Lidar")
+# plt.scatter(radar["vx"],radar["vy"], s = 25, marker = "+", color = 'r', linewidth=1, label = "Radar")
+# plt.scatter(est["vx"],est["vy"], s = 35, marker = "1", color = 'g', linewidth=1, label = "Estimate")
+# plt.plot(gt["vx"],gt["vy"], linewidth=1.5, label = "Ground Truth")
+# plt.grid(color = 'k', ls = '--', lw = 0.5)
+# plt.legend()
+# plt.xlabel('VX (units)')
+# plt.ylabel('VY (units)')
+# plt.title('Velocity [VX,VY]')
+# fig.savefig(output_file_name[:-4]+'_velocity.tif', dpi = 300)
 
 #%% plot rmse vs time
 fig = plt.figure(figsize=(6.4, 5.0))
