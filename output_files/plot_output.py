@@ -9,6 +9,19 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
+SMALL_SIZE = 8
+MEDIUM_SIZE = 10
+BIGGER_SIZE = 12
+
+plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=6)     # fontsize of the axes title
+plt.rc('axes', labelsize=6)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=6)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=6)    # fontsize of the tick labels
+plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
 #%% merge array
 # Merge arr1[0..n1-1] and  
 # arr2[0..n2-1] into  
@@ -62,7 +75,7 @@ def mergeArrays(arr1, arr2, n1, n2):
 
 data_column        = ["key","px","py","vx","vy"]
 
-output_file_name   = "dataset2.out" 
+output_file_name   = "dataset1_01.out" 
 data = pd.read_csv(output_file_name, sep = " ", skiprows = 3, names = data_column, index_col=False)
 
 gt      = data[data["key"] == "ground_truth"]
@@ -97,17 +110,17 @@ radar["vy"]      = radar["rho_dot"]*np.sin(radar["theta"])
 
 #%% plot position
 
-fig = plt.figure(figsize=(6.4, 5.0))
+fig = plt.figure(figsize=(3.2, 2.5))
 plt.scatter(lidar["px"],lidar["py"], s = 25, marker = "x", color = 'k', linewidths=1, label = "Lidar")
 plt.scatter(radar["px"],radar["py"], s = 25, marker = "+", color = 'r', linewidth=1, label = "Radar")
 plt.scatter(est["px"],est["py"], s = 35, marker = "1", color = 'g', linewidth=1, label = "Estimate")
 plt.plot(gt["px"],gt["py"], linewidth=1.5, label = "Ground Truth")
 plt.grid(color = 'k', ls = '--', lw = 0.5)
-plt.legend()
+plt.legend(loc='lower right', prop={'size': 6})
 plt.xlabel('X (units)')
 plt.ylabel('Y (units)')
 plt.title('Position [X,Y]')
-fig.savefig( output_file_name[:-4]+'_position.tif', dpi = 300)
+fig.savefig( output_file_name[:-4]+'_position.jpg', dpi = 300)
 
 #%% plot velocity
 
@@ -124,7 +137,7 @@ fig.savefig( output_file_name[:-4]+'_position.tif', dpi = 300)
 # fig.savefig(output_file_name[:-4]+'_velocity.tif', dpi = 300)
 
 #%% plot rmse vs time
-fig = plt.figure(figsize=(6.4, 5.0))
+fig = plt.figure(figsize=(3.2, 2.5))
 plt.plot(meas_time,rmse["px"],  color = 'b', linewidth=1, label = "px")
 plt.plot(meas_time,rmse["py"],  color = 'r', linewidth=1, label = "py")
 plt.plot(meas_time,rmse["vx"],  color = 'g', linewidth=1, label = "vx")
@@ -135,7 +148,7 @@ plt.legend()
 plt.xlabel('time (sec)')
 plt.ylabel('RMSE (units)')
 plt.title('RMSE')
-fig.savefig(output_file_name[:-4]+'_rmse.tif', dpi = 300)
+fig.savefig(output_file_name[:-4]+'_rmse.jpg', dpi = 300)
 plt.ylim(0.0, 1.0)
-fig.savefig(output_file_name[:-4]+'_rmse_zoom_y.tif', dpi = 300)
+fig.savefig(output_file_name[:-4]+'_rmse_zoom_y.jpg', dpi = 300)
 
