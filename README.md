@@ -92,6 +92,6 @@ The simulator output is shown below :
 
 |              |              |
 |:------------:|:------------:|
-|<img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/output_files/dataset1_11_position.jpg" alt="Position1_11" title="Position w/ Lidar and Radar width="960" height="540"/> | <img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/output_files/dataset1_11_rmse.jpg" alt="RMSE1_11" title="RMSE w/ Lidar and Radar width="960" height="540"/> |
+|<img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/output_files/dataset1_11_position.jpg" width="960" height="540"/> | <img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/output_files/dataset1_11_rmse.jpg" width="960" height="540"/> |
 
 
