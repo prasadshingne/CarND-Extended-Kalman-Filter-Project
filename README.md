@@ -79,7 +79,7 @@ I used VSCode IDE for this project. Follow the thorough instructions provided by
 
 ##   Results
 
-[//]: #(Image References)
+[//]: # (Image References)
 
 [image1]: ./output_files/dataset1_11_position.jpg "Position1_11"
 [image2]: ./output_files/dataset1_11_rmse.jpg "RMSE1_11"
@@ -90,6 +90,8 @@ The conde works well with RMSE = [0.0964425, 0.0852905, 0.415426, 0.431636]. Che
 
 The simulator output is shown below : 
 
-![alt text][image1] ![alt text][image2]
+|              |              |
+|:------------:|:------------:|
+|<img src="./output_files/dataset1_11_position.jpg" alt=""Position1_11"" title="Position w/ Lidar and Radar width="960" height="540"/> | <img src="./output_files/dataset1_11_rmse.jpg" alt=""RMSE1_11"" title="RMSE w/ Lidar and Radar width="960" height="540"/> |
 
 
