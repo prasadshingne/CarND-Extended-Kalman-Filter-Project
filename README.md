@@ -79,19 +79,54 @@ I used VSCode IDE for this project. Follow the thorough instructions provided by
 
 ##   Results
 
-[//]: # (Image References)
+I ran the simulation four times:
 
-[image1]: ./output_files/dataset1_11_position.jpg "Position1_11"
-[image2]: ./output_files/dataset1_11_rmse.jpg "RMSE1_11"
+1. Dataset1, using lidar and radar
+2. Dataset1, using lidar only
+3. Dataset1, using radar only
+4. Dataset2, using lidar and radar
 
-### Using both the lidar and radat
+The output files and plotting script are in the ./output_files folder.
 
-The conde works well with RMSE = [0.0964425, 0.0852905, 0.415426, 0.431636]. Check output [file](https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/tree/master/output_files/dataset1_11.out)
+### Dataset1, using both the lidar and radar (lidar = true, radar = true)
+
+The conde works well, with RMSE = [0.0964425, 0.0852905, 0.415426, 0.431636]. Check output [file.](https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/tree/master/output_files/dataset1_11.out)
 
 The simulator output is shown below : 
 
-|              |              |
+| Position     | RMSE         |
 |:------------:|:------------:|
-|<img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/blob/master/output_files/dataset1_11_position.jpg" width="960" height="540"/> | <img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/blob/master/output_files/dataset1_11_rmse.jpg" width="960" height="540"/> |
+|<img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/blob/master/output_files/dataset1_11_position.jpg" width="480" height="270"/> | <img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/blob/master/output_files/dataset1_11_rmse.jpg" width="480" height="270"/> |
+
+
+### Dataset1, using lidar alone (lidar = true, radar = false)
+
+The predictions are slightly worse, with RMSE = [0.146952, 0.115285, 0.609732, 0.537763]. Check output [file.](https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/tree/master/output_files/dataset1_10.out)
+
+The simulator output is shown below : 
+
+| Position     | RMSE         |
+|:------------:|:------------:|
+|<img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/blob/master/output_files/dataset1_10_position.jpg" width="480" height="270"/> | <img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/blob/master/output_files/dataset1_10_rmse.jpg" width="480" height="270"/> |
+
+### Dataset1, using radar alone (radar = true, lidar = false)
+
+The predictions are the worst of the three options, with RMSE = [0.22789, 0.346044, 0.572788, 0.796972]. Check output [file.](https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/tree/master/output_files/dataset1_01.out)
+
+The simulator output is shown below : 
+
+| Position     | RMSE         |
+|:------------:|:------------:|
+|<img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/blob/master/output_files/dataset1_01_position.jpg" width="480" height="270"/> | <img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/blob/master/output_files/dataset1_01_rmse.jpg" width="480" height="270"/> |
+
+### Dataset2, using both the lidar and radar (lidar = true, radar = true)
+
+The predictions for dataset2 are about as good as those for datase1 while using lidar and radar measurements, with RMSE = [0.0725678, 0.0964738, 0.421634, 0.493199]. Check output [file.](https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/tree/master/output_files/dataset2.out)
+
+The simulator output is shown below : 
+
+| Position     | RMSE         |
+|:------------:|:------------:|
+|<img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/blob/master/output_files/dataset2_position.jpg" width="480" height="270"/> | <img src="https://github.com/prasadshingne/CarND-Extended-Kalman-Filter-Project/blob/master/output_files/dataset2_rmse.jpg" width="480" height="270"/> |
 
 
