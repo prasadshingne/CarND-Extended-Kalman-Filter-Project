@@ -79,10 +79,10 @@ I used VSCode IDE for this project. Follow the thorough instructions provided by
 
 ##   Results
 
-[//]: # (Image References)
+[//]: #(Image References)
 
-[image1]: ./output_files/dataset1_11_position.tif "Position1_11"
-[image2]: ./output_files/dataset1_11_rmse.tif "RMSE1_11"
+[image1]: ./output_files/dataset1_11_position.jpg "Position1_11"
+[image2]: ./output_files/dataset1_11_rmse.jpg "RMSE1_11"
 
 ### Using both the lidar and radat
 
@@ -90,6 +90,6 @@ The conde works well with RMSE = [0.0964425, 0.0852905, 0.415426, 0.431636]. Che
 
 The simulator output is shown below : 
 
-![alt text][image1]
+![alt text][image1] ![alt text][image2]
 
 
