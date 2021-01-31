@@ -59,9 +59,7 @@ Once the install for uWebSocketIO is complete, the main program can be built and
    * On windows, you may need to run: `cmake .. -G "Unix Makefiles" && make`
 4. Run it: `./ExtendedKF `
 
-## My Simulator and Environment Set-up
-
-I did all my work on a Linux machine running Ubuntu 20.04.1 LTS. 
+## My Simulator and Environment Set-up (Ubuntu 20.04.1 LTS)
 
 ### Simulator Setup
 
